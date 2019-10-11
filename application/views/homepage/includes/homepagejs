@@ -1,0 +1,53 @@
+$.noConflict();
+ (function($){
+$(document).ready(function(){
+//clicked
+//$('tr:even').css('background','#CCCCCC');
+//$('tr:odd').css('background','#aaaaaa');
+$('#span_cnic').hide();
+$('#search_cnic').keyup(function() {
+    $('span.error-keyup-1').hide();
+    $('span.error-keyup-2').hide();
+    var inputVal = $(this).val();
+    var numericReg = /^\d*[0-9](|.\d*[0-9]|,\d*[0-9])?$/;
+    if(!numericReg.test(inputVal)) {
+        $(this).after('<span class="error error-keyup-1" style="color:red;">Numeric characters only.</span>');
+        $('#span_cnic').hide();
+    }
+});
+ 
+  $('#search_btn').click(function(){
+  $('span.error-keyup-1').hide();
+  $('span.error-keyup-2').hide();
+   var cnic=$('#search_cnic').val();
+   if(cnic=="")
+   {
+    //alert();
+    $('#search_cnic').focus();
+    $('#search_cnic').css('border-color','red');
+    $('#span_cnic').css('color','red');
+    
+    $('#span_cnic').show();
+    return false;
+   }else if(cnic.length!=13)
+   {
+    $('#span_cnic').hide();
+    $('#search_cnic').focus();
+    $('#search_cnic').css('border-color','red');
+    $('#search_cnic').after('<span class="error error-keyup-2" style="color:red;">Invalid CNIC.</span>');
+    return false;
+   }
+
+   
+   //$('#test3').remove();
+    //$("#test3").val("Dolly Duck");
+    });
+
+    $('#createNum').click(function(){
+   alert();
+   $('#test3').remove();
+    //$("#test3").val("Dolly Duck");
+    });
+    
+});
+})(jQuery);

@@ -1,0 +1,23 @@
+alter table connection_table add constraint con_ctype foreign key (con_con_type_id) references connection_type_table(con_type_id)
+alter table connection_table add constraint con_consumer foreign key (con_consumer_id) references consumer_table(consumer_id)
+alter table connection_table add constraint con_meter foreign key (con_meter_id) references meter_table(meter_id)
+alter table connection_table add constraint con_area foreign key (con_area_id) references area_table(area_id)
+alter table consumer_table add constraint cons_per foreign key (consumer_person_id) references person_table(person_id)
+alter table employee_table add constraint emp_per foreign key (emp_person_id) references person_table(person_id)
+alter table employee_table add constraint emp_emp_type foreign key (emp_emp_type_id) references employee_type_table(emp_type_id)
+alter table employee_table add constraint emp_area foreign key (emp_area_id) references area_table(area_id)
+alter table meter_table add constraint meter_mtype foreign key (meter_mtype_id) references meter_type_table(meter_type_id)
+alter table connection_load_charge_table add constraint clc_meter foreign key (cl_meter_id) references meter_table(meter_id)
+ alter table `installment_table`  add constraint ins_arrear foreign key (installment_arrear_id) references arrear_table(arrear_id)
+ alter table tariff_table add constraint trif_con_type foreign key (t_conn_type_id) references connection_type_table(con_type_id)
+alter table reading_table add constraint conn_reading foreign key (`reading_conn_id`) references connection_table(connection_id) on delete cascade on update cascade
+alter table reading_history_table add constraint conn_reading_history foreign key (`conn_rhistory_id`) references connection_table(connection_id) on delete cascade on update cascade
+
+JOIN>>>>
+SELECT cn.`con_consumer_old_no`,cn.`con_consumer_new_no`,cn.`con_meter_number`,cn.`con_date`,cn.`con_status`,cs.`cons_fname`,cs.`cons_lname`,cs.`cons_father_name`,cs.`cons_email`,cs.`cons_dob`,cs.`cons_gender`,cs.`cons_phone_number`,cs.`cons_cell_number`,cs.`cons_cnic`,cs.`cons_permanent_address`,cs.`cons_current_address`,ct.`con_type_name`, ar.`area_name` FROM (((connection_table cn INNER JOIN consumer_table cs ON cn.`con_consumer_id`= cs.consumer_id) INNER JOIN area_table ar ON ar.area_id = cn.`con_area_id`) INNER JOIN connection_type_table ct ON ct.con_type_id = cn.`con_con_type_id`) ORDER BY `cs`.`consumer_id` ASC
+reading>>>
+SELECT `last_reading`,`new_reading` , `new_reading`-`last_reading` as diff FROM `reading_history_table` WHERE 1
+SELECT `last_reading`,`new_reading` , `new_reading`-`last_reading` as diff FROM `reading_table` WHERE 1
+SELECT sum(new_reading-last_reading ) as total_units FROM `reading_history_table` WHERE 1
+alter table login_table add constraint login_emp foreign key (`emp_id`) references employee_table (emp_id) on delete cascade on update cascade
+alter table complaint_table add constraint comp_connection_id foreign key (`con_id`) references connection_table(connection_id) on delete cascade on update cascade
